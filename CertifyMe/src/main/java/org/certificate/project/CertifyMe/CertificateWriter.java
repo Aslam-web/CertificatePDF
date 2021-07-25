@@ -2,12 +2,9 @@ package org.certificate.project.CertifyMe;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import org.certificate.project.CertifyMe.constants.CustomColours;
-import org.certificate.project.CertifyMe.constants.CustomFontPaths;
-import org.certificate.project.CertifyMe.constants.CustomStampPaths;
+import org.certificate.project.CertifyMe.certificates.Certificate;
+import org.certificate.project.CertifyMe.constants.Constants;
 
 import com.itextpdf.io.font.FontProgramFactory;
 import com.itextpdf.io.font.constants.StandardFonts;
@@ -21,11 +18,13 @@ import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
+import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.VerticalAlignment;
 
 public class CertificateWriter {
 	private Certificate certificate;
@@ -59,9 +58,9 @@ public class CertificateWriter {
 			writeDescription();								// #2 - description
 
 			if (this.certificate.signatureIsImage()) {		
-				writeSignature(true);						// #3a - if the signature is a String
+				writeSignature(true);						// #3a - if the signature is a Image
 			} else 
-				writeSignature();							// #3b - if the signature is an Image
+				writeSignature();							// #3b - if the signature is an String
 			
 			writeDate();									// #4 - date
 			
@@ -70,6 +69,7 @@ public class CertificateWriter {
 			}
 			
 			pdf.close();
+			System.out.println("-------------------------------------------------\n");
 			System.out.println("Process Completed successfully");
 			System.out.println("Collect your certificate from "+DEST);
 	}
@@ -80,17 +80,18 @@ public class CertificateWriter {
 		
 		canvas = new Canvas(pdfCanvas, this.certificate.getNamePosition());
 		canvas.setHorizontalAlignment(HorizontalAlignment.CENTER);
-		Text name = new Text("M.N Mohamed Thaqi")
+		Text name = new Text(certificate.getName())
 				.setFont(nameFont)
 				.setUnderline()
-				.setFontColor(CustomColours.GOLD)
+				.setFontColor(Constants.COLOR_CYAN)
 				.setFontSize(42)
 				.setTextAlignment(TextAlignment.CENTER);
 		Paragraph paragraph = new Paragraph().add(name);
 		paragraph.setTextAlignment(TextAlignment.CENTER);
 		canvas.add(paragraph);
-		
-		System.out.println("Added Name ...");
+
+		System.out.println("\n-------------------------------------------------\n"
+				+ "Added Name: "+this.certificate.getName());
 		canvas.close();
 	}
 
@@ -100,36 +101,39 @@ public class CertificateWriter {
 		
 		canvas = new Canvas(pdfCanvas, this.certificate.getDescriptionPosition());
 		canvas.setHorizontalAlignment(HorizontalAlignment.CENTER);
-		Text disc = new Text("Completing the course provided by Harish Infotech\nIn the year 2021")
+		Text disc = new Text(certificate.getDescription())
 				.setFont(descFont)
-				.setFontColor(CustomColours.GREY)
+				.setFontColor(Constants.COLOR_GREY)
 				.setFontSize(24)
 				.setTextAlignment(TextAlignment.CENTER);
 		Paragraph paragraph = new Paragraph().add(disc);
 		paragraph.setTextAlignment(TextAlignment.CENTER);
 		canvas.add(paragraph);
 
-		System.out.println("Added description ...");
+		System.out.println("Added Description: "+this.certificate.getDescription());
 		canvas.close();
 	}
 
 	private void writeSignature() throws IOException {
 		
 		//font for signature
-		PdfFont signFont = PdfFontFactory.createFont(FontProgramFactory.createFont(CustomFontPaths.Fondamento_Italic));
+		PdfFont signFont = PdfFontFactory.createFont(FontProgramFactory.createFont(Constants.FOND_ITALIC));
 		
 		canvas = new Canvas(pdfCanvas, this.certificate.getSignaturePosition());
-		Text signature = new Text("Shoiab infoTech")
+		canvas.setBorder(new SolidBorder(2000));
+		canvas.setHorizontalAlignment(HorizontalAlignment.CENTER);
+		Text signature = new Text(this.certificate.getSignature())
 				.setFont(signFont)
-				.setFontColor(CustomColours.GOLD)
+				.setFontColor(Constants.COLOR_GREEN)
 				.setFontSize(25)
 				.setItalic()
-				.setTextAlignment(TextAlignment.LEFT);
+				.setTextAlignment(TextAlignment.CENTER);
 		Paragraph paragraph = new Paragraph().add(signature);
-		paragraph.setTextAlignment(TextAlignment.LEFT);
+		paragraph.setTextAlignment(TextAlignment.CENTER);
+		paragraph.setVerticalAlignment(VerticalAlignment.BOTTOM);
 		canvas.add(paragraph);
 
-		System.out.println("Added Signature ...");
+		System.out.println("Added Signature: "+this.certificate.getSignature());
 		canvas.close();
 	}
 
@@ -142,63 +146,41 @@ public class CertificateWriter {
 		signature.scaleAbsolute(rect.getWidth(), rect.getHeight());
 		canvas.add(signature);
 
-		System.out.println("Added Signature ...");
+		System.out.println("Added Signature Location: "+this.certificate.getSignature());
 		canvas.close();
 	}
 
 	private void writeDate() throws IOException {
 		
 		// font for date
-		PdfFont dateFont = PdfFontFactory.createFont(FontProgramFactory.createFont(CustomFontPaths.Fondamento_Regular));
+		PdfFont dateFont = PdfFontFactory.createFont(FontProgramFactory.createFont(Constants.FOND_REGULAR));
 		
 		canvas = new Canvas(pdfCanvas, this.certificate.getDatePosition());
-		SimpleDateFormat DateFor = new SimpleDateFormat("dd MMMM yyyy");
-		String stringDate = DateFor.format(new Date());
-		Text date = new Text(stringDate)
+		Text date = new Text(certificate.getDate())
 				.setFont(dateFont)
-				.setFontColor(CustomColours.GOLD)
+				.setFontColor(Constants.COLOR_RED)
 				.setFontSize(25)
 				.setTextAlignment(TextAlignment.CENTER);
 		Paragraph paragraph = new Paragraph().add(date);
 		paragraph.setTextAlignment(TextAlignment.CENTER);
 		canvas.add(paragraph);
 
-		System.out.println("Added Date ...");
+		System.out.println("Added Date: "+this.certificate.getDate());
 		canvas.close();
 	}
 
 	private void writeStamp() throws IOException {
 
-		Image stamp = new Image(ImageDataFactory.create(CustomStampPaths.STAMP1));
+		String stampLocation = certificate.getStamp() != null ? certificate.getStamp() : Constants.STAMP1;
+		
+		Image stamp = new Image(ImageDataFactory.create(stampLocation));
 		Rectangle rect = this.certificate.getStampPosition();
 		
 		canvas = new Canvas(pdfCanvas, rect);
 		stamp.scaleAbsolute(rect.getWidth(), rect.getHeight());
 		canvas.add(stamp);
 
-		System.out.println("Added Stamp ...");
+		System.out.println("Added Stamp Location: "+this.certificate.getStamp());
 		canvas.close();
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

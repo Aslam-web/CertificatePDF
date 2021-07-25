@@ -16,6 +16,7 @@
 	<classpathentry kind="src" path="img"/>
 	<classpathentry kind="src" path="pdf"/>
 	<classpathentry kind="src" path="fonts"/>
+	<classpathentry kind="src" path="output"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>

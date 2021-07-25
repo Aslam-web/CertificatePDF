@@ -27,7 +27,6 @@
 
 
 		<!-- iText dependency -->
-
 		<dependency>
 			<groupId>com.itextpdf</groupId>
 			<artifactId>itext7-core</artifactId>
@@ -35,6 +34,14 @@
 			<type>pom</type>
 		</dependency>
 		
+
+		<!-- SLF4J-simple dependancy -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>2.0.0-alpha2</version>
+		</dependency>
+
 
 	</dependencies>
 </project>

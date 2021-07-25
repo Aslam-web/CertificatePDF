@@ -1,8 +1,10 @@
-package org.certificate.project.CertifyMe;
+package org.certificate.project.CertifyMe.certificates;
 
 import com.itextpdf.kernel.geom.Rectangle;
 
 public interface Certificate {
+	
+	public void addStamp(String location);
 	
 	public String getName();
 	public String getDescription();

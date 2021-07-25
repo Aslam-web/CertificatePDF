@@ -23,15 +23,17 @@ public class ImageToPdfConverter {
 	}
 	
 	public PdfDocument process() throws MalformedURLException{
+		
 		Image certificate = new Image(ImageDataFactory.create(image));
 		PdfWriter pdfWriter = null;
 		try {
+			
 			pdfWriter = new PdfWriter(new FileOutputStream(generatedPdf));
+			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			// create a new method 
 			e.printStackTrace();
 		}
+
 		PdfDocument pdfDoc = new PdfDocument(pdfWriter);
 		Document document = new Document(pdfDoc,
 				new PageSize(new Rectangle(certificate.getImageWidth(), certificate.getImageHeight())));
@@ -39,7 +41,8 @@ public class ImageToPdfConverter {
 		
 		document.add(certificate);
 		
-		System.out.println("done converting image to pdf");
+		System.out.println("Image  >>>   PDF converted");
+		System.out.printf("Output pdf is at \"%s\" ",generatedPdf);
 		document.close();
 		
 		return pdfDoc;

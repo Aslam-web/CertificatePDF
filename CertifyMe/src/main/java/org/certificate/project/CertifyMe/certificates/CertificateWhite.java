@@ -3,8 +3,7 @@ package org.certificate.project.CertifyMe.certificates;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.certificate.project.CertifyMe.Certificate;
-import org.certificate.project.CertifyMe.constants.CustomCertificates;
+import org.certificate.project.CertifyMe.constants.Constants;
 
 import com.itextpdf.kernel.geom.Rectangle;
 
@@ -29,6 +28,22 @@ public class CertificateWhite implements Certificate{
 		this(name, description, new SimpleDateFormat("dd MMMM yyyy").format(new Date()), signature, signatureIsImage);
 	}
 	
+	public CertificateWhite() {
+		init();
+	}
+	
+	private void init() {
+		//name
+		
+		//description
+		
+		//signature
+		
+		//stamp
+		
+		//date
+	}
+
 	public void addStamp(String stamp) {
 		this.stamp = stamp;
 		this.hasStamp = true;
@@ -101,7 +116,7 @@ public class CertificateWhite implements Certificate{
 
 	@Override
 	public String getCertificateAsPdf() {
-		return CustomCertificates.PDF.CERTIF_WHITE;
+		return Constants.PDF_WHITE_CERTIF;
 	}
 
 }
