@@ -14,28 +14,24 @@ public class App {
 	public static void main(String[] args) throws Exception {
 
 		// To convert any image to a pdf(cropped perfectly)
-//		ImageToPdfConverter converter = new ImageToPdfConverter(Constants.IMG_BLACK_CERTIF, out2);
+//		ImageToPdfConverter converter = new ImageToPdfConverter(Constants.IMG_BLACK_CERTIF, output1);
 //		converter.process();
 
 		
 		
-		// 1. Create certificate using hardcoded values
-		Certificate certificate = new CertificateBlack(
-				"M.N Aslam",
-				"Completed the course provided by Harish Infotech In the year 2021. some additional text",
-				"25-07-2021",
-//				Constants.SIGN_ASLAM,
-//				true);
-				"my signature",
-				false);
-//		certificate.addStamp(Constants.STAMP1);						// add a stamp (optional)
-		new CertificateWriter(certificate, output3).write();		// writing to the given location
+		// 1. Create certificate from input from console
+		Certificate certificate = new CertificateBlack();
+		new CertificateWriter(certificate, output1).write();	
 		
 		
 		
-		// 2. Create certificate from input from console
-//		Certificate certificate = new CertificateBlack();
-//		new CertificateWriter(certificate, output3).write();		
+		// 2. Create certificate using hardcoded values
+//		Certificate certificate = new CertificateBlack(
+//				"M.N Aslam",
+//				"Completed the course provided by Harish Infotech In the year 2021. some additional text",
+//				"25-07-2021", "my signature", false);
+//		certificate.addStamp(Constants.STAMP_IT);						// add a stamp (optional)
+//		new CertificateWriter(certificate, output2).write();			// writing to the given location	
 	}
 }
 

@@ -13,7 +13,7 @@ public class CertificateBlack implements Certificate {
 	private String name;
 	private String description;
 	private String signature;
-	private String date;
+	private String date = new SimpleDateFormat("dd MMMM yyyy").format(new Date());
 	private String stamp;
 	private boolean signatureIsImage, hasStamp;
 
@@ -44,6 +44,8 @@ public class CertificateBlack implements Certificate {
 	}
 
 	private boolean init() {
+		
+		System.out.println("######################## Certificate Creation ########################");
 		Scanner sc = new Scanner(System.in);
 		
 		//name
@@ -68,7 +70,7 @@ public class CertificateBlack implements Certificate {
 		if (type.equals("image") || type.equals("i")) {
 			System.out.print("Image location: ");
 			sc.nextLine();
-			 sign = sc.nextLine();
+			sign = sc.nextLine();
 			this.signatureIsImage = true;
 		} else if (type.equals("text") || type.equals("t")) {
 			System.out.print("Signature (Max 23 characters) : ");
@@ -101,16 +103,16 @@ public class CertificateBlack implements Certificate {
 		String dateCheck = sc.next();
 		if (dateCheck.equals("y")) {
 			System.out.print("Custom date (Max 20 characters) : ");
-			String d = sc.next();
-			if (d.length() > 20) {
+			sc.nextLine();
+			String customDate = sc.nextLine();
+			if (customDate.length() > 20) {
 				System.out.println("Date is lengthy");
 				this.error = "Date exceeded 20 characters";
 				sc.close();
 				return false;
 			}
-			this.date = d;
-		} else
-			this.date = new SimpleDateFormat("dd MMMM yyyy").format(new Date());
+			this.date = customDate;
+		}
 
 		sc.close();
 		return true;

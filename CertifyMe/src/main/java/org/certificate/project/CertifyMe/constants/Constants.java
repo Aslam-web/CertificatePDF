@@ -18,6 +18,7 @@ public class Constants {
 	// Stamps
 	public static final String STAMP1 = "img/stamps/stamp.png";
 	public static final String STAMP2 = "img/stamps/stamp2.png";
+	public static final String STAMP_IT = "img/stamps/stamp_infotech.jpg";
 	
 	// Colours
 	public static final Color COLOR_GOLD = new DeviceRgb(244, 213, 124);
